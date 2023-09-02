@@ -1,32 +1,20 @@
-//your JS code here. If required.
-   document.getElementById("btn").addEventListener("click", async function () {
-        const textInput = document.getElementById("text").value;
-        const delayInput = document.getElementById("delay").value;
+async function showMessageWithDelay() {
+            const textInput = document.getElementById('text');
+            const delayInput = document.getElementById('delay');
+            const outputDiv = document.getElementById('output');
+            
+            const text = textInput.value;
+            const delay = parseInt(delayInput.value);
 
-        if (textInput && delayInput) {
-          await showMessageWithDelay(textInput, delayInput);
+            if (!text || isNaN(delay)) {
+                outputDiv.textContent = "Please provide valid input.";
+                return;
+            }
+
+            await new Promise(resolve => setTimeout(resolve, delay));
+
+            outputDiv.textContent = text;
         }
-      });
 
-      // Async function with timeout
-      async function showMessageWithDelay(message, delay) {
-        const outputElement = document.getElementById("output");
-        outputElement.textContent = "Waiting...";
-
-        try {
-          // Parse delay as an integer
-          const delayMs = parseInt(delay);
-          if (isNaN(delayMs) || delayMs < 0) {
-            throw new Error("Invalid delay value.");
-          }
-
-          // Wait for the specified delay
-          await new Promise((resolve) => setTimeout(resolve, delayMs));
-
-          // Display the message after the delay
-          outputElement.textContent = message;
-        } catch (error) {
-          console.error("An error occurred:", error);
-          outputElement.textContent = "Error: " + error.message;
-        }
-      }
+        const btn = document.getElementById('btn');
+        btn.addEventListener('click', showMessageWithDelay);
